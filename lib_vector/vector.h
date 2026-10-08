@@ -344,5 +344,4 @@ public:
 
     //Iterator begin() const noexcept;
     //Iterator end() const noexcept;
-
 };
