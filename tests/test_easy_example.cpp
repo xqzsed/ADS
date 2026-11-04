@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include "../lib_easy_example/easy_example.h"
 
+
 #define EPSILON 0.000001
 
 TEST(TestEasyExampleLib, can_div) {
@@ -47,4 +48,21 @@ TEST(TestEasyExampleLib, throw_when_try_div_by_zero) {
 
   // Act & Assert
   ASSERT_ANY_THROW(division(x, y));
+}
+
+TEST(TestAlgoritmCheckBreackers, CorrectBreakets) {
+    std::string test = "{()}";
+    EXPECT_TRUE(check_breckets(test));
+}
+TEST(TestCheckBrackets, DifficultCorrectBrackets) {
+    std::string test = "{(())()[()()]}";
+    EXPECT_TRUE(check_breckets(test));
+}
+TEST(TestCheckBrackets, EasyInorrectBrackets) {
+    std::string test = "{((}";
+    EXPECT_FALSE(check_breckets(test));
+}
+TEST(TestCheckBrackets, DifficultInorrectBrackets) {
+    std::string test = "{(())()[(){()]}";
+    EXPECT_FALSE(check_breckets(test));
 }

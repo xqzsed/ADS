@@ -7,7 +7,7 @@
 #define VECTOR_TESTS 0
 
 #ifdef MEMDATA_TESTS
-#include "memdata.h"
+#include "../lib_vector/memdata.h"
 
 TEST(FunctionsForMemData, calculate_capacity) {
     EXPECT_EQ(0, calculate_capacity(0));
@@ -116,7 +116,7 @@ TEST(ClassMemData, move_assignment) {
 
 
 #ifdef VECTOR_TESTS
-#include "vector.h"
+#include "../lib_vector/vector.h"
 
 TEST(ClassVector, default_constructor) {
     TVector<double> v;

@@ -1,9 +1,11 @@
-#pragma once
 #include <iostream>
 #include <stdexcept>
 #include <random>
 #include <algorithm>
-#include "memdata.h"
+#include <utility>
+#ifndef LIB_VECTOR_MEMDATA_H_
+#define LIB_VECTOR_MEMDATA_H_
+#endif  // LIB_VECTOR_MEMDATA_H_
 
 template<typename T>
 class TVector {
@@ -55,8 +57,8 @@ class TVector {
         }
     }
 
-public:
-    TVector() = default;
+ public:
+    TVector() : _mem(0) {}
 
     TVector(size_t size) : _mem(size), _front(0), _back(size ? size - 1 : 0) {}
 
@@ -115,13 +117,12 @@ public:
         return _mem._data[normalize_index(index)];
     }
 
-    void push_front(double value) {
+    void push_front(T value) {
         realloc_for_insert();
 
         if (is_empty()) {
             _front = _back = 0;
-        }
-        else {
+        } else {
             _front = (_front == 0 ? _mem._capacity - 1 : _front - 1);
         }
 
@@ -129,7 +130,7 @@ public:
         _mem._size++;
     }
 
-    void insert(double value, size_t pos) {
+    void insert(T value, size_t pos) {
         if (pos > _mem._size) throw std::out_of_range("pos");
 
         if (pos == 0) return push_front(value);
@@ -193,8 +194,7 @@ public:
                 (*this)[i] = (*this)[i - 1];
             }
             pop_front();
-        }
-        else {
+        } else {
             for (size_t i = pos; i < _mem._size - 1; i++) {
                 (*this)[i] = (*this)[i + 1];
             }
@@ -212,7 +212,7 @@ public:
     }
 
     void shuffle() {
-        static std::mt19937 gen(std::random_device{}());
+        static std::mt19937 gen(std::random_device {}());
 
         for (size_t i = _mem._size - 1; i > 0; i--) {
             std::uniform_int_distribution<size_t> d(0, i);
@@ -245,8 +245,7 @@ public:
 
         if (is_empty()) {
             _front = _back = 0;
-        }
-        else {
+        } else {
             _back = (_back + 1) % _mem._capacity;
         }
 
@@ -277,15 +276,15 @@ public:
         return is;
     }
 
-    //template <class Type> class Iterator;
-    //typedef Iterator<T> iterator;
+    // template <class Type> class Iterator;
+    // typedef Iterator<T> iterator;
 
-    //template <class T>
-    //class Iterator {
-    //private:
+    // template <class T>
+    // class Iterator {
+    // private:
     //    T* p_cur;
 
-    //public:
+    // public:
     //    Iterator() {
     //        p_cur = nullptr;
     //    }
@@ -337,11 +336,11 @@ public:
     //    T& operator*() const noexcept {
     //        return *p_cur;
     //    }
-    //};
+    // };
 
-    //Iterator begin() noexcept;
-    //Iterator end() noexcept;
+    // Iterator begin() noexcept;
+    // Iterator end() noexcept;
 
-    //Iterator begin() const noexcept;
-    //Iterator end() const noexcept;
+    // Iterator begin() const noexcept;
+    // Iterator end() const noexcept;
 };

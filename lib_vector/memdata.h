@@ -1,4 +1,4 @@
-#pragma once
+
 #include <initializer_list>
 #include <algorithm>
 
@@ -14,11 +14,12 @@ class TVector;
 
 template<typename T>
 class MemData {
+    
+  public:
     T* _data;
     size_t _size;
     size_t _capacity;
 
-public:
     MemData(size_t size = 0);
     MemData(std::initializer_list<T> list);
     MemData(T* arr, size_t size);
@@ -39,7 +40,7 @@ public:
     MemData& operator=(const MemData& other) noexcept;
     MemData& operator=(MemData&& other) noexcept;
 
-    friend class TVector<T>;
+  
 };
 
 template<typename T>

@@ -1,0 +1,1 @@
+#include "../lib_stack_on_mass/stack.h"
