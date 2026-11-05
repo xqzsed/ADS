@@ -1,12 +1,14 @@
-#ifndef LIB_STACK_STACK_H
-#define LIB_STACK_STACK_H
+// Copyright 2026 xqzsed
+
+#ifndef LIB_STACK_ON_MASS_STACK_H
+#define LIB_STACK_ON_MASS_STACK_H
 #include <stdexcept>
 
 template <class T>
 class TStackOnMass {
 	T* _data;
 	size_t _size;
-	int _top;
+	size_t _top;
 
  public:
 	 TStackOnMass(size_t);
@@ -34,7 +36,7 @@ TStackOnMass<T>::TStackOnMass(const TStackOnMass& other) {
 	_size = other._size;
 	_top = other._top;
 	if (_top != -1) {
-		for (size_t i = 0; i <= _top; ++i) _data = other._data;
+		for (size_t i = 0; i <= _top; ++i) _data[i] = other._data[i];
 	}
 }
 template <class T>
@@ -68,7 +70,7 @@ inline T TStackOnMass<T>::pop() {
 
 template <class T>
 inline T& TStackOnMass<T>::top() {
-	if(is_empty()) std::out_of_range("ERROR: Stack empty");
+	if(is_empty()) throw std::out_of_range("ERROR: Stack empty");
 	return _data[_top];
 }
-#endif // LIB_STACK_STACK_H
+#endif // LIB_STACK_ON_MASS_STACK_H

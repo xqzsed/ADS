@@ -13,18 +13,18 @@ float division(int a, int b) {
 }
 
 bool check_breckets(std::string expression) {
-    TStackOnMass<char> top_stack(expression.size());
+    TStackOnMass<char> tmp_stack(expression.size());
 
     for (char a : expression) {
         if (a == '(' || a == '{' || a == '[') {
-            top_stack.push(a);
+            tmp_stack.push(a);
         }
         else if (a == ')' || a == '}' || a == ']') {
-            if (top_stack.is_empty()) {
+            if (tmp_stack.is_empty()) {
                 return false;
             }
 
-            char top = top_stack.pop();
+            char top = tmp_stack.pop();
 
             if (a == ')' && top != '(') return false;
             if (a == '}' && top != '{') return false;
@@ -32,5 +32,5 @@ bool check_breckets(std::string expression) {
         }
     }
 
-    return top_stack.is_empty();
+    return tmp_stack.is_empty();
 }

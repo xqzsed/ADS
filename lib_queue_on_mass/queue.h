@@ -1,0 +1,98 @@
+// Copyright 2026 xqzsed
+
+#ifndef LIB_QUEUE_STACK_ON_MASS_QUEUE_H
+#define LIB_QUEUE_STACK_ON_MASS_QUEUE_H
+#include <stdexcept>
+
+
+template <class T>
+class TQueueOnMass {
+    T* _data;
+    size_t _size;
+    size_t _front;
+    size_t _back;
+    bool _isEmpty;
+
+public:
+    explicit TQueueOnMass(size_t);
+    TQueueOnMass(const TQueueOnMass&);
+    ~TQueueOnMass();
+
+    inline bool is_empty() const noexcept;
+    inline bool is_full() const noexcept;
+    inline size_t size() const noexcept;
+    inline T& front();
+    inline void push(const T&);
+    inline T pop();
+};
+
+template <class T>
+TQueueOnMass<T>::TQueueOnMass(size_t size) {
+    if (size == 0) {
+        throw std::invalid_argument("ERROR: Queue size can't be 0!");
+    }
+    _size = size;
+    _data = new T[size];
+    _front = 0;
+    _back = 0;
+    _isEmpty = true;
+}
+template <class T>
+TQueueOnMass<T>::TQueueOnMass(const TQueueOnMass& other) {
+    _size = other._size;
+    _front = other._front;
+    _back = other._back;
+    _isEmpty = other._isEmpty;
+    _data = new T[_size];
+    for (size_t i = 0; i < _size; ++i) {
+        _data[i] = other._data[i];
+    }
+}
+template <class T>
+TQueueOnMass<T>::~TQueueOnMass() {
+    delete[] _data;
+}
+
+template <class T>
+inline bool TQueueOnMass<T>::is_empty() const noexcept {
+    return _isEmpty;
+}
+template <class T>
+inline bool TQueueOnMass<T>::is_full() const noexcept {
+    return !_isEmpty && (_front == _back);
+}
+template <class T>
+inline size_t TQueueOnMass<T>::size() const noexcept {
+    return _size;
+}
+template <class T>
+inline T& TQueueOnMass<T>::front() {
+    if (is_empty()) {
+        throw std::underflow_error("ERROR: Queue underflow, can't get front!");
+    }
+    return _data[_front];
+}
+template <class T>
+inline T TQueueOnMass<T>::pop() {
+    if (is_empty()) {
+        throw std::underflow_error("ERROR: Queue underflow, can't pop!");
+    }
+    T val = _data[_front];
+    _front = (_front + 1) % _size;
+    if (_front == _back) {
+        _isEmpty = true;
+    }
+    return val;
+}
+
+template <class T>
+inline void TQueueOnMass<T>::push(const T& value) {
+    if (is_full()) {
+        throw std::overflow_error("ERROR: Queue overflow, can't push!");
+    }
+    _data[_back] = value;
+    _back = (_back + 1) % _size;
+    _isEmpty = false;
+}
+
+#endif // LIB_QUEUE_STACK_ON_MASS_QUEUE_H
